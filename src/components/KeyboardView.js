@@ -21,7 +21,7 @@ constructor(props) {
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1 }} testId='31143368'>
           <FlatList
           keyExtractor={(item) => item.id}
           data={this.props.replies}

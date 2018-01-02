@@ -11,6 +11,7 @@ import {
   Button,
   Image
 } from 'react-native';
+import { Icon } from 'react-native-elements'
 import {KeyboardAccessoryView, KeyboardUtils} from 'react-native-keyboard-input';
 import { connect } from 'react-redux';
 import * as actions from '../Redux/actions';
@@ -57,6 +58,7 @@ class MainScreen extends Component {
         <View style={styles.inputContainer}>
           <TouchableOpacity onPress={() => this.showKeyboardView(KEYBOARD_VIEW)}>
             <Image
+            testID='01039419'
             style={{width: 20, height: 20 }}
             source={require('../assets/qrlogo.png')}
             />

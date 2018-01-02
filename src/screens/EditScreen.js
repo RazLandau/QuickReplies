@@ -79,6 +79,7 @@ class EditScreen extends PureComponent {
           </View>
           <TouchableOpacity onPress={this.onDeleteClick(item)}>
             <Image
+            testID='delete'
             style={{width: 20, height: 20 }}
             source={require('../assets/trash.png')}
             />
