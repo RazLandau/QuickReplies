@@ -1,6 +1,9 @@
+
 describe('main page', () => {
+  let driver;
   beforeEach(async () => {
     await device.reloadReactNative();
+    driver = MainPageDriver();
   });
 
   it('should have QuickReplies logo', async () => {
@@ -8,11 +11,14 @@ describe('main page', () => {
   });
 
   it('should show default keyboard screen after tap', async () => {
-    await element(by.id('01039419')).tap();
-    await expect(element(by.text('Greeting'))).toBeVisible();
-    await expect(element(by.text('Bye'))).toBeVisible();
-    await expect(element(by.text('Getting leads'))).toBeVisible();
-    await expect(element(by.text('Edit'))).toBeVisible();
+    // await element(by.id('01039419')).tap();
+    // await expect(element(by.text('Greeting'))).toBeVisible();
+    // await expect(element(by.text('Bye'))).toBeVisible();
+    // await expect(element(by.text('Getting leads'))).toBeVisible();
+    // await expect(element(by.text('Edit'))).toBeVisible();
+    driver.when.openKeyboard();
+
+    expect(driver.get.buttonsByText('Greetings')).toBeVisible();
   });
 
   it('should show default messeges after tap', async () => {
@@ -25,3 +31,14 @@ describe('main page', () => {
     await expect(element(by.text('We have 30% sale this week, leave me your email and I\'ll get back to you with the details.'))).toBeVisible();
   });
 })
+
+const MainPageDriver = () => {
+  return {
+    get: {
+      buttonsByText: (text) => element(by.text(text)
+    },
+    when: {
+      openKeyboard: async () => await element(by.id('01039419')).tap()
+    }
+  }
+}

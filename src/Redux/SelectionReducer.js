@@ -1,4 +1,4 @@
-import { SELECT_REPLY } from '../consts';
+import { SELECT_REPLY } from '../consts/consts';
 
 export default (state = '', action = {}) => {
     switch (action.type) {

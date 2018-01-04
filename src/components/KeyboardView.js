@@ -3,7 +3,7 @@ import { View, Button, FlatList, Text, ScrollView } from 'react-native';
 import { KeyboardAccessoryView, KeyboardRegistry } from 'react-native-keyboard-input';
 import { connect } from 'react-redux';
 import * as actions from '../Redux/actions';
-import { EDIT_SCREEN, KEYBOARD_VIEW, EDIT_BUTTON } from '../consts/index';
+import { EDIT_SCREEN, KEYBOARD_VIEW, EDIT_BUTTON } from '../consts/consts';
 
 class KeyboardView extends PureComponent {
 

@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import {KeyboardRegistry} from 'react-native-keyboard-input';
 import store from '../Redux/store';
 import KeyboardView from './KeyboardView';
-import { KEYBOARD_VIEW } from '../consts/index';
+import { KEYBOARD_VIEW } from '../consts/consts';
 
 class ConnectedKeyboardView extends Component {
 

@@ -36,7 +36,7 @@ const specReporter = new SpecReporter({
 });
 
 jrunner.configureDefaultReporter({print: () => {}});
-jrunner.loadConfigFile('./test/spec/support/jasmine.json');
+jrunner.loadConfigFile('./__tests__/spec/support/jasmine.json');
 jrunner.addReporter(specReporter);
 
 if (process.env.IS_BUILD_AGENT) {

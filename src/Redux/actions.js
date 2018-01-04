@@ -1,4 +1,4 @@
-import { SELECT_REPLY, SAVE_CHANGES } from '../consts';
+import { SELECT_REPLY, SAVE_CHANGES } from '../consts/consts';
 
 export function selectReply(payload) {
     return { type: SELECT_REPLY, payload };

@@ -4,6 +4,15 @@ import { View, Button, FlatList, TextInput, StyleSheet, Platform, Text } from 'r
 import { Divider, Icon } from 'react-native-elements'
 import * as actions from '../Redux/actions';
 
+const MyComponent = ({myProp}) => {
+
+  const onClick = () => {
+
+  }
+
+  return <View></View>;
+}
+
 class EditScreen extends PureComponent {
   constructor(props) {
     super(props);
@@ -16,7 +25,7 @@ class EditScreen extends PureComponent {
   }
 
 
-  onSaveClick(){
+  onSaveClick() {
     this.props.saveChanges(this.state.newReplies.filter(reply => reply.title));
     this.props.navigator.dismissModal();
   }
@@ -33,34 +42,31 @@ class EditScreen extends PureComponent {
   })
 
   onDeleteClick(item){
-    const that = this;
-    return function(){
-      const newReplies = that.state.newReplies.filter(reply => reply !== item);
-      that.setState({ newReplies });
+    return () => {
+      const newReplies = this.state.newReplies.filter(reply => reply !== item);
+      this.setState({ newReplies });
     }
   }
 
   updateTitle(item) {
-    const that = this;
-    return function (newText) {
-      const newReplies = that.state.newReplies.map(reply => reply !== item ? reply : {
+    return (newText) => {
+      const newReplies = this.state.newReplies.map(reply => reply !== item ? reply : {
         title: newText,
         description: reply.description
       });
-      that.setState({ newReplies });
-    };
- }
+      this.setState({ newReplies });
+      };
+   }
 
- updateDescription(item) {
-  const that = this;
-  return function (newText) {
-    const newReplies = that.state.newReplies.map(reply => reply !== item ? reply : {
-      title: reply.title,
-      description: newText
-    });
-    that.setState({ newReplies });
-  };
-}
+   updateDescription(item) {
+    return (newText) => {
+      const newReplies = this.state.newReplies.map(reply => reply !== item ? reply : {
+        title: reply.title,
+        description: newText
+      });
+      this.setState({ newReplies });
+    };
+  }
 
  renderEditItem = ({ item }) =>
     <View style={styles.replyContainer}>

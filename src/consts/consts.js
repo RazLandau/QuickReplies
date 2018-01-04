@@ -5,6 +5,24 @@ export const TITLE = 'Quick Replies';
 export const SELECT_REPLY = 'selectReply';
 export const SAVE_CHANGES = 'saveChanges';
 export const EDIT_BUTTON = 'editButton';
+export const OLD_MESSAGE = 'oldMessage';
+export const NEW_MESSAGE = 'newMessage';
+export const DEFAULT_MESSAGE = '';
+export const NON_EXISTING_ACTION = 'NON_EXISTING_ACTION';
+export const OLD_REPLIES = [
+  {
+    id: 0,
+    title: 'oldTitle',
+    description: 'oldDescription'
+  }
+]
+export const NEW_REPLIES = [
+  {
+    id: 0,
+    title: 'newTitle',
+    description: 'newDescription'
+  }
+]
 export const DEFAULT_LIBRARY = [
     {
       id: 0,

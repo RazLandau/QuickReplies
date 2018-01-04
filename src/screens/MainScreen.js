@@ -8,13 +8,12 @@ import {
   TextInput,
   Button,
 } from 'react-native';
-import { Icon } from 'react-native-elements'
+import { Icon, Divider } from 'react-native-elements'
 import {KeyboardAccessoryView, KeyboardUtils} from 'react-native-keyboard-input';
 import { connect } from 'react-redux';
 import * as actions from '../Redux/actions';
-import { EDIT_SCREEN } from '../consts/index';
-import '../components/ConnectedKeyboardView';
-import { KEYBOARD_VIEW, EDIT_BUTTON } from '../consts/index';
+import '../components/KeyboardView.connected';
+import { KEYBOARD_VIEW, EDIT_BUTTON, EDIT_SCREEN } from '../consts/consts';
 
 const IsIOS = Platform.OS === 'ios';
 const TrackInteractive = true;
@@ -30,30 +29,24 @@ class MainScreen extends Component {
     };
   }
 
-  goToEditScreen = () => this.props.navigator.showKeyboardView({
-    screen: EDIT_SCREEN,
-    title: 'Quick Replies'
-  })
+  goToEditScreen = () => {
+    this.props.navigator.showKeyboardView({
+      screen: EDIT_SCREEN,
+      title: 'Quick Replies'
+    });
+  }
 
-  resetKeyboardView = () => this.setState({
-    customKeyboard: {}
-  })
-
-  showKeyboardView = (component) => this.setState({
-    customKeyboard: {
-      component,
-    },
-  })
+  resetKeyboardView = () => this.setState({customKeyboard: {}});
+  showKeyboardView = (component) => this.setState({customKeyboard: {component}});
+  onKeyboardResigned = () => this.resetKeyboardView();
 
   sendMessage = () => this.props.selectReply('');
 
   keyboardAccessoryViewContent = () =>
       <View blurType="xlight" style={styles.blurContainer}>
-        <View style={{borderTopWidth: StyleSheet.hairlineWidth, borderColor: '#bbb'}}/>
+        <Divider style={{ backgroundColor: '#bbb' }}/>
         <View style={styles.inputContainer}>
           <Icon
-          //raised
-          //color='#517fa4'
           name='near-me'
           onPress={() => this.showKeyboardView(KEYBOARD_VIEW)}
           />
@@ -94,6 +87,8 @@ class MainScreen extends Component {
           kbInputRef={this.textInputRef}
           kbComponent={this.state.customKeyboard.component}
           onItemSelected={this.onKeyboardItemSelected}
+          trackInteractive={true}
+          onKeyboardResigned={this.onKeyboardResigned}
         />
       </View>
     );
@@ -144,13 +139,14 @@ const styles = StyleSheet.create({
     borderRadius: 18,
   },
   sendButton: {
-    paddingRight: 15,
+    paddingRight: 40,
     paddingLeft: 15,
     alignSelf: 'center',
   },
 });
 
-const mapStateToProps = state =>
-  ({ message: state.message });
+const mapStateToProps = state => {
+  return { message: state.message };
+}
 
 export default connect(mapStateToProps, actions)(MainScreen);

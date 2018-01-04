@@ -3,9 +3,9 @@ import { Navigation } from 'react-native-navigation';
 import MainScreen from './src/screens/MainScreen';
 import EditScreen from './src/screens/EditScreen';
 import store from './src/Redux/store';
-import { MAIN_SCREEN, EDIT_SCREEN, TITLE } from './src/consts/index';
+import { MAIN_SCREEN, EDIT_SCREEN, TITLE } from './src/consts/consts';
 
-export function registerScreens() {
+function registerScreens() {
   Navigation.registerComponent(MAIN_SCREEN, () => MainScreen, store, Provider);
   Navigation.registerComponent(EDIT_SCREEN, () => EditScreen, store, Provider);
 }

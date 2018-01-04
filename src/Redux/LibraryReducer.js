@@ -1,4 +1,4 @@
-import { DEFAULT_LIBRARY, SAVE_CHANGES } from '../consts';
+import { DEFAULT_LIBRARY, SAVE_CHANGES } from '../consts/consts';
 
 export default (state = DEFAULT_LIBRARY, action ={}) => {
     switch (action.type) {
