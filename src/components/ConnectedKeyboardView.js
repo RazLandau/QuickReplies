@@ -9,17 +9,12 @@ class ConnectedKeyboardView extends Component {
 
   constructor(props) {
     super(props);
-    console.log(props);
-  }
-
-  onButtonPress() {
-    KeyboardRegistry.onItemSelected(KEYBOARD_VIEW);
   }
 
   render() {
     return (
         <Provider store={store}>
-            <KeyboardView onEditClick={this.props.onEditClick} />
+            <KeyboardView />
         </Provider>
     );
   }

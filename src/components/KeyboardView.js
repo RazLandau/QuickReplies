@@ -3,7 +3,7 @@ import { View, Button, FlatList, Text, ScrollView } from 'react-native';
 import { KeyboardAccessoryView, KeyboardRegistry } from 'react-native-keyboard-input';
 import { connect } from 'react-redux';
 import * as actions from '../Redux/actions';
-import { EDIT_SCREEN, KEYBOARD_VIEW } from '../consts/index';
+import { EDIT_SCREEN, KEYBOARD_VIEW, EDIT_BUTTON } from '../consts/index';
 
 class KeyboardView extends PureComponent {
 
@@ -11,23 +11,24 @@ constructor(props) {
     super(props);
   }
 
-  onButtonPress() {
+  onEditPress() {
     KeyboardRegistry.onItemSelected(KEYBOARD_VIEW, {
+      item: EDIT_BUTTON,
     });
   }
 
  renderButton = ({ item }) =>
- <Button onPress={() => this.props.selectReply(item.description)} title={item.title} />
+ <Button color='black' onPress={() => this.props.selectReply(item.description)} title={item.title} />
 
   render() {
     return (
-      <View style={{ flex: 1 }} testId='31143368'>
+      <View style={{ flex: 1, backgroundColor: '#F5FCFF' }}>
           <FlatList
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item, index) => index}
           data={this.props.replies}
           renderItem={this.renderButton}
           />
-          <Button onPress={() => this.onButtonPress()} title='Edit' />
+          <Button onPress={() => this.onEditPress()} title='Edit' />
       </View>
     );
   }

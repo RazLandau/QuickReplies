@@ -1,13 +1,14 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { View, Button, FlatList, TextInput, StyleSheet, Platform, PixelRatio, TouchableOpacity, Text, Image } from 'react-native';
+import { Divider, Icon } from 'react-native-elements'
 import * as actions from '../Redux/actions';
+import LineSeperator from '../components/LineSeperator';
 
 class EditScreen extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      // replies: props.replies,
       newReplies: this.props.replies.slice(),
     };
     this.onSaveClick = this.onSaveClick.bind(this);
@@ -17,17 +18,20 @@ class EditScreen extends PureComponent {
 
 
   onSaveClick(){
-    this.props.saveChanges(this.state.newReplies);
+    this.props.saveChanges(this.state.newReplies.filter(reply => reply.title));
     this.props.navigator.dismissModal();
   }
 
   onCancelClick = () => this.props.navigator.dismissModal();
 
-  onAddClick = () => this.setState({ newReplies: [...this.state.newReplies,
-    {
-      title: '',
-      description: ''
-  }] })
+  onAddClick = () => this.setState({
+    newReplies: [...this.state.newReplies,
+      {
+        title: '',
+        description: ''
+      }
+    ]
+  })
 
   onDeleteClick(item){
     const that = this;
@@ -60,68 +64,45 @@ class EditScreen extends PureComponent {
 }
 
  renderEditItem = ({ item }) =>
-  <View style={{ alignSelf: 'stretch', padding: 5, flex: 1, marginBottom: 25 }}>
-        <View style={styles.inputContainer}>
-          <View style={{ flex: 5, flexDirection: 'column'}}>
-            <TextInput
-            style={styles.textInput}
-            defaultValue={item.title}
-            placeholder='title'
-            onChangeText={this.updateTitle(item)}
-            />
-            <TextInput
-            style={{ borderColor: 'gray', borderWidth: 1, height: 50 }}
-            defaultValue={item.description}
-            placeholder='description'
-            multiline
-            onChangeText={this.updateDescription(item)}
-            />
-          </View>
-          <TouchableOpacity onPress={this.onDeleteClick(item)}>
-            <Image
-            testID='delete'
-            style={{width: 20, height: 20 }}
-            source={require('../assets/trash.png')}
-            />
-          </TouchableOpacity>
-        </View>
+    <View style={styles.replyContainer}>
+      <View style={styles.inputContainer}>
+        <TextInput
+        style={styles.textInput}
+        defaultValue={item.title}
+        placeholder='title'
+        onChangeText={this.updateTitle(item)}
+        />
+        <TextInput
+        style={styles.textInput}
+        defaultValue={item.description}
+        placeholder='description'
+        multiline
+        onChangeText={this.updateDescription(item)}
+        />
+      </View>
+      <Icon
+      name='delete'
+      onPress={this.onDeleteClick(item)}
+      />
     </View>
 
 
   render() {
     return (
-      <View style={styles.container}>
-        <View style={{ flex: 5, justifyContent: 'center', alignItems: 'center', backgroundColor: '#F5FCFF', padding: 10 }}>
+      <View blurType="xlight" style={styles.container}>
           <FlatList
-          style={{ alignSelf: 'stretch', paddingTop: 20 }}
-          keyExtractor={(item) => item.id}
-          data={[...this.state.newReplies]}
+          style={styles.listContainer}
+          keyExtractor={(item, index) => index}
+          data={this.state.newReplies}
           renderItem={this.renderEditItem}
           />
-        </View>
-       <View style={{borderTopWidth: StyleSheet.hairlineWidth, borderColor: '#bbb'}}/>
+        <Divider style={{ backgroundColor: '#bbb' }}/>
         <View>
-          <Button title='Add' onPress={this.onAddClick} />
-          <Button title='Cancel' onPress={this.onCancelClick} />
+          <Button color='green' title='Add' onPress={this.onAddClick} />
+          <Button color='red' title='Cancel' onPress={this.onCancelClick} />
           <Button title='Save' onPress={this.onSaveClick}/>
         </View>
       </View>
-      // <View style={styles.container}>
-      //   <View contentContainerStyle={styles.scrollContainer}>
-      //     <FlatList
-      //       // style={{ alignSelf: 'stretch', paddingTop: 20 }}
-      //       keyExtractor={(item) => item.id}
-      //       data={[...this.state.replies, ...this.state.newReplies]}
-      //       renderItem={this.renderEditItem}
-      //       />
-      //   </View>
-      //   <View blurType="xlight" style={styles.blurContainer}>
-      //     <View style={{borderTopWidth: StyleSheet.hairlineWidth, borderColor: '#bbb'}}/>
-      //       <Button title='Add' onPress={this.onAddClick} />
-      //       <Button title='Cancel' onPress={this.onCancelClick} />
-      //       <Button title='Save' onPress={() => {}}/>
-      //     </View>
-      // </View>
     );
   }
 }
@@ -136,44 +117,28 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F5FCFF',
   },
-  scrollContainer: {
-    justifyContent: 'center',
-    padding: 15,
-    flex: 3,
+  listContainer: {
+    alignSelf: 'stretch',
+    paddingTop: 20,
+    padding: 10
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-    paddingTop: 50,
-    paddingBottom: 50,
+  replyContainer: {
+    flexDirection: 'row',
+    marginBottom: 25
   },
   inputContainer: {
-    //flex: 1,
-    flexDirection: 'row',
-    alignSelf: 'stretch',
-    // justifyContent: 'space-between',
-    // marginBottom: 25,
-  },
-  blurContainer: {
-    ...Platform.select({
-      ios: {
-        flex: 1,
-      },
-    }),
+    flex: 5,
+    flexDirection: 'column'
   },
   textInput: {
     flex: 1,
-    // marginLeft: 10,
-    //marginTop: 10,
-    //marginBottom: 10,
-    // paddingLeft: 10,
-    //paddingTop: 2,
-    // paddingBottom: 5,
-    // fontSize: 16,
-    // backgroundColor: 'white',
-    // borderWidth: 0.5 / PixelRatio.get(),
-    //borderRadius: 18,
+    marginLeft: 10,
+    paddingLeft: 10,
+    paddingTop: 5,
+    paddingBottom: 5,
+    fontSize: 16,
+    backgroundColor: 'white',
+    // borderRadius: 18,
     borderColor: 'gray',
     borderWidth: 1
   },

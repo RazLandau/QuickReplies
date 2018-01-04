@@ -3,13 +3,10 @@ import {
   StyleSheet,
   Text,
   View,
-  ScrollView,
-  TouchableOpacity,
   PixelRatio,
   Platform,
   TextInput,
   Button,
-  Image
 } from 'react-native';
 import { Icon } from 'react-native-elements'
 import {KeyboardAccessoryView, KeyboardUtils} from 'react-native-keyboard-input';
@@ -17,7 +14,7 @@ import { connect } from 'react-redux';
 import * as actions from '../Redux/actions';
 import { EDIT_SCREEN } from '../consts/index';
 import '../components/ConnectedKeyboardView';
-import { KEYBOARD_VIEW } from '../consts/index';
+import { KEYBOARD_VIEW, EDIT_BUTTON } from '../consts/index';
 
 const IsIOS = Platform.OS === 'ios';
 const TrackInteractive = true;
@@ -36,33 +33,30 @@ class MainScreen extends Component {
   goToEditScreen = () => this.props.navigator.showKeyboardView({
     screen: EDIT_SCREEN,
     title: 'Quick Replies'
-  });
+  })
 
-  resetKeyboardView() {
-    this.setState({customKeyboard: {}});
-  }
+  resetKeyboardView = () => this.setState({
+    customKeyboard: {}
+  })
 
-  showKeyboardView(component) {
-    this.setState({
-      customKeyboard: {
-        component,
-      },
-    });
-  }
+  showKeyboardView = (component) => this.setState({
+    customKeyboard: {
+      component,
+    },
+  })
 
-  sendMessage = () => KeyboardUtils.dismiss();
+  sendMessage = () => this.props.selectReply('');
 
   keyboardAccessoryViewContent = () =>
       <View blurType="xlight" style={styles.blurContainer}>
         <View style={{borderTopWidth: StyleSheet.hairlineWidth, borderColor: '#bbb'}}/>
         <View style={styles.inputContainer}>
-          <TouchableOpacity onPress={() => this.showKeyboardView(KEYBOARD_VIEW)}>
-            <Image
-            testID='01039419'
-            style={{width: 20, height: 20 }}
-            source={require('../assets/qrlogo.png')}
-            />
-          </TouchableOpacity>
+          <Icon
+          //raised
+          //color='#517fa4'
+          name='near-me'
+          onPress={() => this.showKeyboardView(KEYBOARD_VIEW)}
+          />
           <TextInput
             maxHeight={200}
             style={styles.textInput}
@@ -72,17 +66,22 @@ class MainScreen extends Component {
             placeholder={'Message'}
             onFocus={() => this.resetKeyboardView()}
           />
-          <TouchableOpacity style={styles.sendButton} onPress={this.sendMessage}>
-            <Text>Send</Text>
-          </TouchableOpacity>
+          <Icon
+          name='send'
+          onPress={this.sendMessage}
+          />
         </View>
       </View>
 
-  onKeyboardItemSelected = () =>
-    this.props.navigator.showModal({
-      screen: EDIT_SCREEN,
-      title: 'Quick Replies'
-    });
+  onKeyboardItemSelected = (keyboardId, params) => {
+    switch(params.item){
+      case EDIT_BUTTON:
+        this.props.navigator.showModal({
+          screen: EDIT_SCREEN,
+          title: 'Quick Replies'
+        });
+      }
+    }
 
   render() {
     return (
