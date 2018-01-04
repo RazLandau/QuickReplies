@@ -1,9 +1,8 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { View, Button, FlatList, TextInput, StyleSheet, Platform, PixelRatio, TouchableOpacity, Text, Image } from 'react-native';
+import { View, Button, FlatList, TextInput, StyleSheet, Platform, Text } from 'react-native';
 import { Divider, Icon } from 'react-native-elements'
 import * as actions from '../Redux/actions';
-import LineSeperator from '../components/LineSeperator';
 
 class EditScreen extends PureComponent {
   constructor(props) {
